@@ -18,11 +18,21 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+
     UIViewController *viewController1 = [[TBPictureViewController alloc] initWithNibName:nil bundle:nil];
     UIViewController *viewController2 = [[TBSecondViewController alloc] initWithNibName:nil bundle:nil];
     UIViewController *viewController3 = [[TBThirdViewController alloc] initWithNibName:nil bundle:nil];
+    UINavigationController* nav1 = [[UINavigationController alloc] initWithRootViewController:viewController1];
+    UINavigationController* nav2 = [[UINavigationController alloc] initWithRootViewController:viewController2];
+    UINavigationController* nav3 = [[UINavigationController alloc] initWithRootViewController:viewController3];
     self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = @[viewController1, viewController2, viewController3];
+    self.tabBarController.viewControllers = @[nav1, nav2, nav3];
+    
+    //03A9F4
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:3./255 green:169./255 blue:242./255 alpha:1.0]];
+    [[UINavigationBar appearance] setTranslucent:NO];
+    [[UITabBar appearance] setBackgroundColor:[UIColor colorWithWhite:242./255 alpha:1.0]];
+    
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
     return YES;
