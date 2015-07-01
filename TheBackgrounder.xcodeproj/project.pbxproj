@@ -23,6 +23,7 @@
 		5DF019D11B43AE50009F8134 /* TBPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF019D01B43AE50009F8134 /* TBPictureViewController.m */; };
 		5DF019D41B43AECB009F8134 /* TBSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF019D31B43AECB009F8134 /* TBSecondViewController.m */; };
 		5DF019D71B43AED6009F8134 /* TBThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF019D61B43AED6009F8134 /* TBThirdViewController.m */; };
+		E1DFD10286E5EA38DB29B018 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE7DA956135EE30615B9BBF1 /* libPods.a */; };
 		EC4063D416ACF86200132CFC /* NewsstandKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC4063D316ACF86200132CFC /* NewsstandKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		EC67559F16ABAB7F008998E4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC67559E16ABAB7F008998E4 /* UIKit.framework */; };
 		EC6755A116ABAB7F008998E4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC6755A016ABAB7F008998E4 /* Foundation.framework */; };
@@ -40,8 +41,54 @@
 		ECFA66BC16ABE51500EA2211 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECFA66BB16ABE51500EA2211 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		5D4E5E351B43E26E00311D20 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5D4E5E2C1B43E26E00311D20 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BFD84566AA656DDE7EBC009B;
+			remoteInfo = Pods;
+		};
+		5D4E5E371B43E26E00311D20 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5D4E5E2C1B43E26E00311D20 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 80283EBCA78E71DDCCCFD3EA;
+			remoteInfo = "Pods-DACircularProgress";
+		};
+		5D4E5E391B43E26E00311D20 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5D4E5E2C1B43E26E00311D20 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E9A0A61F542558B53A047DAC;
+			remoteInfo = "Pods-MBProgressHUD";
+		};
+		5D4E5E3B1B43E26E00311D20 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5D4E5E2C1B43E26E00311D20 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0F6F481C3A01B9C491CAB4A0;
+			remoteInfo = "Pods-MWPhotoBrowser";
+		};
+		5D4E5E3D1B43E26E00311D20 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5D4E5E2C1B43E26E00311D20 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 46333D338BF109E752F1A1CE;
+			remoteInfo = "Pods-PSTCollectionView";
+		};
+		5D4E5E3F1B43E26E00311D20 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5D4E5E2C1B43E26E00311D20 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D37E4810C344347F16BAD36E;
+			remoteInfo = "Pods-SDWebImage";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		5D38F4061B43C88600BB15AF /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		5D4E5E2C1B43E26E00311D20 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = SOURCE_ROOT; };
 		5DF019B71B43ADBD009F8134 /* ic_general_bg_bottom_transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_general_bg_bottom_transparent.png; sourceTree = "<group>"; };
 		5DF019B81B43ADBD009F8134 /* ic_general_bg_bottom_transparent_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_general_bg_bottom_transparent_pressed.png; sourceTree = "<group>"; };
 		5DF019B91B43ADBD009F8134 /* ic_general_bottom_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_general_bottom_add.png; sourceTree = "<group>"; };
@@ -60,6 +107,9 @@
 		5DF019D31B43AECB009F8134 /* TBSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBSecondViewController.m; sourceTree = "<group>"; };
 		5DF019D51B43AED6009F8134 /* TBThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBThirdViewController.h; sourceTree = "<group>"; };
 		5DF019D61B43AED6009F8134 /* TBThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBThirdViewController.m; sourceTree = "<group>"; };
+		A3BE0B11C7A5BE2D307E97E3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		B5A820D0F0B2B4500DC91C8F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		BE7DA956135EE30615B9BBF1 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC4063D316ACF86200132CFC /* NewsstandKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NewsstandKit.framework; path = System/Library/Frameworks/NewsstandKit.framework; sourceTree = SDKROOT; };
 		EC67559A16ABAB7F008998E4 /* TheBackgrounder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheBackgrounder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC67559E16ABAB7F008998E4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -96,12 +146,26 @@
 				EC67559F16ABAB7F008998E4 /* UIKit.framework in Frameworks */,
 				EC6755A116ABAB7F008998E4 /* Foundation.framework in Frameworks */,
 				EC6755A316ABAB7F008998E4 /* CoreGraphics.framework in Frameworks */,
+				E1DFD10286E5EA38DB29B018 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5D4E5E2D1B43E26E00311D20 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5D4E5E361B43E26E00311D20 /* libPods.a */,
+				5D4E5E381B43E26E00311D20 /* libPods-DACircularProgress.a */,
+				5D4E5E3A1B43E26E00311D20 /* libPods-MBProgressHUD.a */,
+				5D4E5E3C1B43E26E00311D20 /* libPods-MWPhotoBrowser.a */,
+				5D4E5E3E1B43E26E00311D20 /* libPods-PSTCollectionView.a */,
+				5D4E5E401B43E26E00311D20 /* libPods-SDWebImage.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		5DF019B61B43ADBD009F8134 /* resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -121,12 +185,22 @@
 			path = resource;
 			sourceTree = "<group>";
 		};
+		6D10CE380BB91FB1D5513D03 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A3BE0B11C7A5BE2D307E97E3 /* Pods.debug.xcconfig */,
+				B5A820D0F0B2B4500DC91C8F /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		EC67558F16ABAB7F008998E4 = {
 			isa = PBXGroup;
 			children = (
 				EC6755A416ABAB7F008998E4 /* TheBackgrounder */,
 				EC67559D16ABAB7F008998E4 /* Frameworks */,
 				EC67559B16ABAB7F008998E4 /* Products */,
+				6D10CE380BB91FB1D5513D03 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -151,6 +225,7 @@
 				EC67559E16ABAB7F008998E4 /* UIKit.framework */,
 				EC6755A016ABAB7F008998E4 /* Foundation.framework */,
 				EC6755A216ABAB7F008998E4 /* CoreGraphics.framework */,
+				BE7DA956135EE30615B9BBF1 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -174,6 +249,7 @@
 		EC6755A516ABAB7F008998E4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5D4E5E2C1B43E26E00311D20 /* Pods.xcodeproj */,
 				5DF019B61B43ADBD009F8134 /* resource */,
 				EC6755A616ABAB7F008998E4 /* TheBackgrounder-Info.plist */,
 				EC6755A716ABAB7F008998E4 /* InfoPlist.strings */,
@@ -193,9 +269,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EC6755CC16ABAB7F008998E4 /* Build configuration list for PBXNativeTarget "TheBackgrounder" */;
 			buildPhases = (
+				DE468EB62FBD9550E3050E40 /* Check Pods Manifest.lock */,
 				EC67559616ABAB7F008998E4 /* Sources */,
 				EC67559716ABAB7F008998E4 /* Frameworks */,
 				EC67559816ABAB7F008998E4 /* Resources */,
+				D250B06CFD7DBD7638E76665 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -235,12 +313,63 @@
 			mainGroup = EC67558F16ABAB7F008998E4;
 			productRefGroup = EC67559B16ABAB7F008998E4 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 5D4E5E2D1B43E26E00311D20 /* Products */;
+					ProjectRef = 5D4E5E2C1B43E26E00311D20 /* Pods.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				EC67559916ABAB7F008998E4 /* TheBackgrounder */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		5D4E5E361B43E26E00311D20 /* libPods.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPods.a;
+			remoteRef = 5D4E5E351B43E26E00311D20 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5D4E5E381B43E26E00311D20 /* libPods-DACircularProgress.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libPods-DACircularProgress.a";
+			remoteRef = 5D4E5E371B43E26E00311D20 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5D4E5E3A1B43E26E00311D20 /* libPods-MBProgressHUD.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libPods-MBProgressHUD.a";
+			remoteRef = 5D4E5E391B43E26E00311D20 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5D4E5E3C1B43E26E00311D20 /* libPods-MWPhotoBrowser.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libPods-MWPhotoBrowser.a";
+			remoteRef = 5D4E5E3B1B43E26E00311D20 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5D4E5E3E1B43E26E00311D20 /* libPods-PSTCollectionView.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libPods-PSTCollectionView.a";
+			remoteRef = 5D4E5E3D1B43E26E00311D20 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5D4E5E401B43E26E00311D20 /* libPods-SDWebImage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libPods-SDWebImage.a";
+			remoteRef = 5D4E5E3F1B43E26E00311D20 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		EC67559816ABAB7F008998E4 /* Resources */ = {
@@ -267,6 +396,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D250B06CFD7DBD7638E76665 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DE468EB62FBD9550E3050E40 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EC67559616ABAB7F008998E4 /* Sources */ = {
@@ -347,6 +509,7 @@
 		};
 		EC6755CD16ABAB7F008998E4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A3BE0B11C7A5BE2D307E97E3 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TheBackgrounder/TheBackgrounder-Prefix.pch";
@@ -359,6 +522,7 @@
 		};
 		EC6755CE16ABAB7F008998E4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B5A820D0F0B2B4500DC91C8F /* Pods.release.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TheBackgrounder/TheBackgrounder-Prefix.pch";

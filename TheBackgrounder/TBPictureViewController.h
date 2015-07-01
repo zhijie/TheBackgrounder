@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MWPhotoBrowser.h"
 
-@interface TBPictureViewController : UIViewController<NSStreamDelegate>
+@interface TBPictureViewController : UIViewController<NSStreamDelegate,UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate,MWPhotoBrowserDelegate>
 
 
 - (IBAction)didTapConnect:(id)sender;

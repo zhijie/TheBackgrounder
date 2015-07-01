@@ -9,16 +9,46 @@
 #import "TBPictureViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
+// screen size
+#define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+#define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+#define IS_RETINA ([[UIScreen mainScreen] scale] >= 2.0)
+
+
+#define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
+#define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
+#define SCREEN_MAX_LENGTH (MAX(SCREEN_WIDTH, SCREEN_HEIGHT))
+#define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
+
+#define IS_IPHONE_4_OR_LESS (IS_IPHONE && SCREEN_MAX_LENGTH < 568.0)
+#define IS_IPHONE_5 (IS_IPHONE && SCREEN_MAX_LENGTH == 568.0)
+#define IS_IPHONE_6 (IS_IPHONE && SCREEN_MAX_LENGTH == 667.0)
+#define IS_IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 736.0)
+
+#define isIOS6 (floor(NSFoundationVersionNumber) < NSFoundationVersionNumber_iOS_7_0)
+#define isIOS7 (floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber_iOS_7_0)
+
+#define WIDTH_CONTENT_VIEW ([[UIScreen mainScreen] bounds].size.width)
+//#define HEIGHT_CONTENT_VIEW ((IS_IPHONE_5?568:480) - 64)
+#define HEIGHT_CONTENT_VIEW (([[UIScreen mainScreen] bounds].size.height) -  64)
+
+
 #define textIP @"121.199.30.240"
 #define textPORT @"10000"
 
-@interface TBPictureViewController ()
+@interface TBPictureViewController () {
+    NSMutableArray* _dataArray;
+}
 
 @property (nonatomic, strong) NSInputStream *inputStream;
 @property (nonatomic, strong) NSOutputStream *outputStream;
 @property (nonatomic, strong) NSMutableString *communicationLog;
 @property (nonatomic) BOOL sentPing;
 @property (nonatomic) UIBackgroundTaskIdentifier backgroundTaskIdentifier;
+
+@property (nonatomic,strong) UITableView* tableview;
+@property (nonatomic,strong) MWPhotoBrowser* browser;
+
 
 
 @end
@@ -34,6 +64,8 @@ const uint8_t pongString[] = "pong\n";
     if (self) {
         self.title = @"有序";
         self.tabBarItem.image = [UIImage imageNamed:@"ic_general_bottombar_youxu"];
+        
+        _dataArray = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -44,10 +76,53 @@ const uint8_t pongString[] = "pong\n";
     self.view.backgroundColor = [UIColor whiteColor];
     
 //    [self didTapConnect:nil];
-    [self startBackgroundTimer];
+//    [self startBackgroundTimer];
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidTakeScreenshot:) name:UIApplicationUserDidTakeScreenshotNotification object:nil];
+    
+    _tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_CONTENT_VIEW, HEIGHT_CONTENT_VIEW)];
+    _tableview.dataSource = self;
+    _tableview.delegate = self;
+    [self.view addSubview:_tableview];
+    
+    [self installPhotoBrowser];
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self scanAllScreenShotImages];
+    
+}
+
+- (void) installPhotoBrowser
+{
+
+    // Create browser
+    BOOL displayActionButton = NO;
+    BOOL displaySelectionButtons = NO;
+    BOOL displayNavArrows = NO;
+    BOOL enableGrid = YES;
+    BOOL startOnGrid = YES;
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+    browser.displayActionButton = displayActionButton;
+    browser.displayNavArrows = displayNavArrows;
+    browser.displaySelectionButtons = displaySelectionButtons;
+    browser.alwaysShowControls = displaySelectionButtons;
+    browser.zoomPhotosToFill = YES;
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_7_0
+    browser.wantsFullScreenLayout = YES;
+#endif
+    browser.enableGrid = enableGrid;
+    browser.startOnGrid = startOnGrid;
+    browser.enableSwipeToDismiss = YES;
+//    [browser setCurrentPhotoIndex:0];
+    browser.view.backgroundColor =[UIColor whiteColor];
+    _browser = browser;
+    
+    [self.view addSubview:browser.view];
 }
 
 
@@ -216,7 +291,7 @@ const uint8_t pongString[] = "pong\n";
     }
 }
 
--(void)getImage
+-(void)getLastestImageFromPhotos
 {
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     
@@ -246,4 +321,176 @@ const uint8_t pongString[] = "pong\n";
         NSLog(@"No groups");
     }];
 }
+
+-(void)scanAllScreenShotImages
+{
+    [_dataArray removeAllObjects];
+    
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    
+    // Enumerate just the photos and videos group by using ALAssetsGroupSavedPhotos.
+    [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+        
+        // Within the group enumeration block, filter to enumerate just photos.
+        [group setAssetsFilter:[ALAssetsFilter allPhotos]];
+        
+        // Chooses the photo at the last index
+        [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *alAsset, NSUInteger index, BOOL *innerStop) {
+            
+            // The end of the enumeration is signaled by asset == nil.
+            if (alAsset) {
+                ALAssetRepresentation *representation = [alAsset defaultRepresentation];
+                //UIImage *latestPhoto = [UIImage imageWithCGImage:[representation fullScreenImage]];
+                
+                
+                // Do something interesting with the AV asset.
+//                NSLog(@"image metadata: %@",representation.metadata);
+                
+                int height = [[representation.metadata objectForKey:@"PixelHeight"] intValue];
+                int width = [[representation.metadata objectForKey:@"PixelWidth"] intValue];
+                if ( (height == 1136 && width == 640) ||
+                    (height == 960 && width == 640) ||
+                    (height == 480 && width == 320) ||
+                    (height == 1334 && width == 750) ||
+                    (height == 2208 && width == 1242)) {
+                    UIImage *photo = [UIImage imageWithCGImage:[representation fullScreenImage]];
+                    [_dataArray addObject:[MWPhoto photoWithImage:photo]];
+                    [_browser reloadData];
+//                    [_tableview reloadData];
+                    
+                }
+            }
+        }];
+    } failureBlock: ^(NSError *error) {
+        // Typically you should handle an error more gracefully than this.
+        NSLog(@"No groups");
+    }];
+}
+#pragma mark - tableview
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"ViewControllerCell";
+    UITableViewCell *cell;
+    cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    UIImageView* image;
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        
+        image = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0 , WIDTH_CONTENT_VIEW, 80)];
+        image.tag = 14;
+        [cell addSubview:image];
+        
+    }else {
+        image = (UIImageView*)[cell viewWithTag:14];
+    }
+    
+    UIImage *photo = [_dataArray objectAtIndex:indexPath.row];
+    [image setImage:photo];
+    
+    return cell;
+}
+
+
+#pragma mark - tableview delegate and datasource
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 80;
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    //return _dataArray.count;
+    return 0;
+}
+
+#define TABLE_CELL_INSETS UIEdgeInsetsMake(0, 30, 0, 0)
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:TABLE_CELL_INSETS];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:TABLE_CELL_INSETS];
+    }
+}
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    if ([_tableview respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_tableview setSeparatorInset:TABLE_CELL_INSETS];
+    }
+    
+    if ([_tableview respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_tableview setLayoutMargins:TABLE_CELL_INSETS];
+    }
+}
+
+
+#pragma mark - MWPhotoBrowserDelegate
+
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
+    return _dataArray.count;
+}
+
+- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+    if (index < _dataArray.count)
+        return [_dataArray objectAtIndex:index];
+    return nil;
+}
+
+- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser thumbPhotoAtIndex:(NSUInteger)index {
+    if (index < _dataArray.count)
+        return [_dataArray objectAtIndex:index];
+    return nil;
+    
+}
+
+//- (MWCaptionView *)photoBrowser:(MWPhotoBrowser *)photoBrowser captionViewForPhotoAtIndex:(NSUInteger)index {
+//    MWPhoto *photo = [self.photos objectAtIndex:index];
+//    MWCaptionView *captionView = [[MWCaptionView alloc] initWithPhoto:photo];
+//    return [captionView autorelease];
+//}
+
+//- (void)photoBrowser:(MWPhotoBrowser *)photoBrowser actionButtonPressedForPhotoAtIndex:(NSUInteger)index {
+//    NSLog(@"ACTION!");
+//}
+
+- (void)photoBrowser:(MWPhotoBrowser *)photoBrowser didDisplayPhotoAtIndex:(NSUInteger)index {
+    NSLog(@"Did start viewing photo at index %lu", (unsigned long)index);
+}
+
+//- (BOOL)photoBrowser:(MWPhotoBrowser *)photoBrowser isPhotoSelectedAtIndex:(NSUInteger)index {
+//    return [[_selections objectAtIndex:index] boolValue];
+//}
+
+//- (NSString *)photoBrowser:(MWPhotoBrowser *)photoBrowser titleForPhotoAtIndex:(NSUInteger)index {
+//    return [NSString stringWithFormat:@"Photo %lu", (unsigned long)index+1];
+//}
+
+//- (void)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index selectedChanged:(BOOL)selected {
+//    [_selections replaceObjectAtIndex:index withObject:[NSNumber numberWithBool:selected]];
+//    NSLog(@"Photo at index %lu selected %@", (unsigned long)index, selected ? @"YES" : @"NO");
+//}
+
+- (void)photoBrowserDidFinishModalPresentation:(MWPhotoBrowser *)photoBrowser {
+    // If we subscribe to this method we must dismiss the view controller ourselves
+    NSLog(@"Did finish modal presentation");
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 @end
