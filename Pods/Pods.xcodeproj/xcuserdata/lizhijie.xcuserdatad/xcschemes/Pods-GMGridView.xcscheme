@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BB78441669EC8A09BABDCBEE"
-               BuildableName = "libPods-MWPhotoBrowser.a"
-               BlueprintName = "Pods-MWPhotoBrowser"
+               BlueprintIdentifier = "65229DD5F4F1EFD8E3D6BFE4"
+               BuildableName = "libPods-GMGridView.a"
+               BlueprintName = "Pods-GMGridView"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
