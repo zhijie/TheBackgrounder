@@ -421,9 +421,9 @@ const uint8_t pongString[] = "pong\n";
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         
-        image = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0 , WIDTH_CONTENT_VIEW, 80)];
+        image = [[UIImageView alloc] initWithFrame:CGRectMake(0, 5 , WIDTH_CONTENT_VIEW, 50)];
         image.tag = 14;
-        image.contentMode = UIViewContentModeScaleAspectFit;
+        image.contentMode = UIViewContentModeScaleAspectFit ;
         [cell addSubview:image];
         
     }else {
@@ -452,7 +452,7 @@ const uint8_t pongString[] = "pong\n";
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80;
+    return 60;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
