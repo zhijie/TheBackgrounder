@@ -25,6 +25,7 @@
 		5D4E5E611B43EC5D00311D20 /* photo8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5D4E5E511B43EC5D00311D20 /* photo8.jpg */; };
 		5D4E5E621B43EC5D00311D20 /* photo8t.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5D4E5E521B43EC5D00311D20 /* photo8t.jpg */; };
 		5D4E5E661B43F3C400311D20 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D4E5E651B43F3C400311D20 /* QuartzCore.framework */; };
+		5D4E5E751B43FCB800311D20 /* TBFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D4E5E741B43FCB700311D20 /* TBFirstViewController.m */; };
 		5DF019C31B43ADBD009F8134 /* ic_general_bg_bottom_transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DF019B71B43ADBD009F8134 /* ic_general_bg_bottom_transparent.png */; };
 		5DF019C41B43ADBD009F8134 /* ic_general_bg_bottom_transparent_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DF019B81B43ADBD009F8134 /* ic_general_bg_bottom_transparent_pressed.png */; };
 		5DF019C51B43ADBD009F8134 /* ic_general_bottom_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DF019B91B43ADBD009F8134 /* ic_general_bottom_add.png */; };
@@ -130,6 +131,8 @@
 		5D4E5E511B43EC5D00311D20 /* photo8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo8.jpg; sourceTree = "<group>"; };
 		5D4E5E521B43EC5D00311D20 /* photo8t.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo8t.jpg; sourceTree = "<group>"; };
 		5D4E5E651B43F3C400311D20 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		5D4E5E731B43FCB700311D20 /* TBFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBFirstViewController.h; sourceTree = "<group>"; };
+		5D4E5E741B43FCB700311D20 /* TBFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBFirstViewController.m; sourceTree = "<group>"; };
 		5DF019B71B43ADBD009F8134 /* ic_general_bg_bottom_transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_general_bg_bottom_transparent.png; sourceTree = "<group>"; };
 		5DF019B81B43ADBD009F8134 /* ic_general_bg_bottom_transparent_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_general_bg_bottom_transparent_pressed.png; sourceTree = "<group>"; };
 		5DF019B91B43ADBD009F8134 /* ic_general_bottom_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_general_bottom_add.png; sourceTree = "<group>"; };
@@ -303,6 +306,8 @@
 				5D4E5E421B43EC5D00311D20 /* Photos */,
 				EC6755AD16ABAB7F008998E4 /* TBAppDelegate.h */,
 				EC6755AE16ABAB7F008998E4 /* TBAppDelegate.m */,
+				5D4E5E731B43FCB700311D20 /* TBFirstViewController.h */,
+				5D4E5E741B43FCB700311D20 /* TBFirstViewController.m */,
 				EC6755A516ABAB7F008998E4 /* Supporting Files */,
 				5DF019CF1B43AE50009F8134 /* TBPictureViewController.h */,
 				5DF019D01B43AE50009F8134 /* TBPictureViewController.m */,
@@ -527,6 +532,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DF019D41B43AECB009F8134 /* TBSecondViewController.m in Sources */,
+				5D4E5E751B43FCB800311D20 /* TBFirstViewController.m in Sources */,
 				EC6755AB16ABAB7F008998E4 /* main.m in Sources */,
 				EC6755AF16ABAB7F008998E4 /* TBAppDelegate.m in Sources */,
 				5DF019D11B43AE50009F8134 /* TBPictureViewController.m in Sources */,

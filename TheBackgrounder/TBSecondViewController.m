@@ -41,8 +41,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = @"存档";
-        self.tabBarItem.image = [UIImage imageNamed:@"ic_general_bottom_document"];
+        self.title = @"有序";
+        self.tabBarItem.image = [UIImage imageNamed:@"ic_general_bottombar_youxu"];
         
         _thumbnailArray = [[NSMutableArray alloc] init];
         _photoArray = [[NSMutableArray alloc] init];
