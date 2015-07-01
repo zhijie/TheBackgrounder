@@ -37,7 +37,9 @@
 #define textPORT @"10000"
 
 @interface TBPictureViewController () {
-    NSMutableArray* _dataArray;
+//    NSMutableArray* _dataArray;
+        NSMutableArray* _photoArray;
+        NSMutableArray* _thumbnailArray;
 }
 
 @property (nonatomic, strong) NSInputStream *inputStream;
@@ -65,7 +67,10 @@ const uint8_t pongString[] = "pong\n";
         self.title = @"有序";
         self.tabBarItem.image = [UIImage imageNamed:@"ic_general_bottombar_youxu"];
         
-        _dataArray = [[NSMutableArray alloc] init];
+//        _dataArray = [[NSMutableArray alloc] init];
+        _thumbnailArray = [[NSMutableArray alloc] init];
+        _photoArray = [[NSMutableArray alloc] init];
+        
     }
     return self;
 }
@@ -86,7 +91,7 @@ const uint8_t pongString[] = "pong\n";
     _tableview.delegate = self;
     [self.view addSubview:_tableview];
     
-    [self installPhotoBrowser];
+//    [self installPhotoBrowser];
     
 }
 
@@ -103,7 +108,7 @@ const uint8_t pongString[] = "pong\n";
     // Create browser
     BOOL displayActionButton = NO;
     BOOL displaySelectionButtons = NO;
-    BOOL displayNavArrows = NO;
+    BOOL displayNavArrows = YES;
     BOOL enableGrid = YES;
     BOOL startOnGrid = YES;
     MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
@@ -121,10 +126,42 @@ const uint8_t pongString[] = "pong\n";
 //    [browser setCurrentPhotoIndex:0];
     browser.view.backgroundColor =[UIColor whiteColor];
     _browser = browser;
+//    
+//    [self testPhotoBrowser];
+//    [self.view addSubview:browser.view];
+//    [browser viewDidLoad];
+//    [browser viewWillAppear:NO];
+//    [browser viewDidAppear:NO];
     
-    [self.view addSubview:browser.view];
+//    [self.navigationController pushViewController:browser animated:YES];
 }
 
+-(void)testPhotoBrowser
+{
+    MWPhoto* photo = [MWPhoto photoWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"photo5" ofType:@"jpg"]]];
+    photo.caption = @"White Tower";
+    [_photoArray addObject:photo];
+    photo = [MWPhoto photoWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"photo2" ofType:@"jpg"]]];
+    photo.caption = @"The London Eye is a giant Ferris wheel situated on the banks of the River Thames, in London, England.";
+    [_photoArray addObject:photo];
+    photo = [MWPhoto photoWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"photo3" ofType:@"jpg"]]];
+    photo.caption = @"York Floods";
+    [_photoArray addObject:photo];
+    photo = [MWPhoto photoWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"photo4" ofType:@"jpg"]]];
+    photo.caption = @"Campervan";
+    [_photoArray addObject:photo];
+    // Thumbs
+    photo = [MWPhoto photoWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"photo5t" ofType:@"jpg"]]];
+    [_thumbnailArray addObject:photo];
+    photo = [MWPhoto photoWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"photo2t" ofType:@"jpg"]]];
+    [_thumbnailArray addObject:photo];
+    photo = [MWPhoto photoWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"photo3t" ofType:@"jpg"]]];
+    [_thumbnailArray addObject:photo];
+    photo = [MWPhoto photoWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"photo4t" ofType:@"jpg"]]];
+    [_thumbnailArray addObject:photo];
+    
+    [_browser reloadData];
+}
 
 - (void)startBackgroundTimer
 {
@@ -324,7 +361,9 @@ const uint8_t pongString[] = "pong\n";
 
 -(void)scanAllScreenShotImages
 {
-    [_dataArray removeAllObjects];
+//    [_dataArray removeAllObjects];
+    [_thumbnailArray removeAllObjects];
+    [_photoArray removeAllObjects];
     
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     
@@ -354,9 +393,13 @@ const uint8_t pongString[] = "pong\n";
                     (height == 1334 && width == 750) ||
                     (height == 2208 && width == 1242)) {
                     UIImage *photo = [UIImage imageWithCGImage:[representation fullScreenImage]];
-                    [_dataArray addObject:[MWPhoto photoWithImage:photo]];
-                    [_browser reloadData];
-//                    [_tableview reloadData];
+                    //                    [_dataArray addObject:photo];
+                    [_photoArray addObject:[MWPhoto photoWithImage:photo]];
+                    [_thumbnailArray addObject:[MWPhoto photoWithImage:[UIImage imageWithCGImage:alAsset.aspectRatioThumbnail]]];
+//                    [_browser reloadData];
+                    
+                    [_tableview reloadData];
+                    
                     
                 }
             }
@@ -380,14 +423,15 @@ const uint8_t pongString[] = "pong\n";
         
         image = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0 , WIDTH_CONTENT_VIEW, 80)];
         image.tag = 14;
+        image.contentMode = UIViewContentModeScaleAspectFit;
         [cell addSubview:image];
         
     }else {
         image = (UIImageView*)[cell viewWithTag:14];
     }
     
-    UIImage *photo = [_dataArray objectAtIndex:indexPath.row];
-    [image setImage:photo];
+    MWPhoto *photo = [_thumbnailArray objectAtIndex:indexPath.row];
+    [image setImage:photo.image];
     
     return cell;
 }
@@ -396,7 +440,9 @@ const uint8_t pongString[] = "pong\n";
 #pragma mark - tableview delegate and datasource
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    [self installPhotoBrowser];
+    [_browser setCurrentPhotoIndex:indexPath.row];
+    [self.navigationController pushViewController:_browser animated:YES];
     
 }
 
@@ -410,8 +456,8 @@ const uint8_t pongString[] = "pong\n";
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //return _dataArray.count;
-    return 0;
+    return _thumbnailArray.count;
+//    return 0;
 }
 
 #define TABLE_CELL_INSETS UIEdgeInsetsMake(0, 30, 0, 0)
@@ -443,18 +489,18 @@ const uint8_t pongString[] = "pong\n";
 #pragma mark - MWPhotoBrowserDelegate
 
 - (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
-    return _dataArray.count;
+    return _photoArray.count;
 }
 
 - (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
-    if (index < _dataArray.count)
-        return [_dataArray objectAtIndex:index];
+    if (index < _photoArray.count)
+        return [_photoArray objectAtIndex:index];
     return nil;
 }
 
 - (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser thumbPhotoAtIndex:(NSUInteger)index {
-    if (index < _dataArray.count)
-        return [_dataArray objectAtIndex:index];
+    if (index < _thumbnailArray.count)
+        return [_thumbnailArray objectAtIndex:index];
     return nil;
     
 }
