@@ -7,6 +7,7 @@
 //
 
 #import "TBPictureViewController.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 #define textIP @"121.199.30.240"
 #define textPORT @"10000"
@@ -17,6 +18,8 @@
 @property (nonatomic, strong) NSOutputStream *outputStream;
 @property (nonatomic, strong) NSMutableString *communicationLog;
 @property (nonatomic) BOOL sentPing;
+@property (nonatomic) UIBackgroundTaskIdentifier backgroundTaskIdentifier;
+
 
 @end
 
@@ -39,12 +42,69 @@ const uint8_t pongString[] = "pong\n";
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    
+//    [self didTapConnect:nil];
+    [self startBackgroundTimer];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidTakeScreenshot:) name:UIApplicationUserDidTakeScreenshotNotification object:nil];
 }
 
-- (void)didReceiveMemoryWarning
+
+- (void)startBackgroundTimer
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    // Avoid a retain cycle
+    __weak UIViewController * weakSelf = self;
+    
+    // Declare the start of a background task
+    // If you do not do this then the mainRunLoop will stop
+    // firing when the application enters the background
+    self.backgroundTaskIdentifier =
+    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        
+        [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskIdentifier];
+    }];
+    
+    // Make sure you end the background task when you no longer need background execution:
+    // [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskIdentifier];
+    
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+    
+        // Since we are not on the main run loop this will NOT work:
+        [NSTimer scheduledTimerWithTimeInterval:1
+                                         target:self
+                                       selector:@selector(timerDidFire:)
+                                       userInfo:nil
+                                        repeats:YES];
+        
+        // This is because the |scheduledTimerWithTimeInterval| uses
+        // [NSRunLoop currentRunLoop] which will return a new background run loop
+        // which will not be currently running.
+        // Instead do this:
+        NSTimer * timer =
+        [NSTimer timerWithTimeInterval:1
+                                target:weakSelf
+                              selector:@selector(timerDidFire:)
+                              userInfo:nil
+                               repeats:YES];
+        
+        [[NSRunLoop mainRunLoop] addTimer:timer
+                                  forMode:NSDefaultRunLoopMode];
+        // or use |NSRunLoopCommonModes| if you want the timer to fire while scrolling
+    });
+}
+
+- (void) timerDidFire:(NSTimer *)timer
+{
+    
+    NSLog(@"Timer did fire at %@",[[NSDate date] description]);
+}
+
+-(void)userDidTakeScreenshot:(id)sender
+{
+    NSLog(@"Screenshot at %@",[[NSDate date] description]);
 }
 
 - (void)addEvent:(NSString *)event
@@ -156,4 +216,34 @@ const uint8_t pongString[] = "pong\n";
     }
 }
 
+-(void)getImage
+{
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    
+    // Enumerate just the photos and videos group by using ALAssetsGroupSavedPhotos.
+    [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+        
+        // Within the group enumeration block, filter to enumerate just photos.
+        [group setAssetsFilter:[ALAssetsFilter allPhotos]];
+        
+        // Chooses the photo at the last index
+        [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *alAsset, NSUInteger index, BOOL *innerStop) {
+            
+            // The end of the enumeration is signaled by asset == nil.
+            if (alAsset) {
+                ALAssetRepresentation *representation = [alAsset defaultRepresentation];
+                UIImage *latestPhoto = [UIImage imageWithCGImage:[representation fullScreenImage]];
+                
+                // Stop the enumerations
+                *stop = YES; *innerStop = YES;
+                
+                // Do something interesting with the AV asset.
+                NSLog(@"image size ");
+            }
+        }];
+    } failureBlock: ^(NSError *error) {
+        // Typically you should handle an error more gracefully than this.
+        NSLog(@"No groups");
+    }];
+}
 @end

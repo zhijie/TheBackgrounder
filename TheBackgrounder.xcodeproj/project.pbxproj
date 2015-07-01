@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D38F4071B43C88600BB15AF /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D38F4061B43C88600BB15AF /* AssetsLibrary.framework */; };
 		5DF019C31B43ADBD009F8134 /* ic_general_bg_bottom_transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DF019B71B43ADBD009F8134 /* ic_general_bg_bottom_transparent.png */; };
 		5DF019C41B43ADBD009F8134 /* ic_general_bg_bottom_transparent_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DF019B81B43ADBD009F8134 /* ic_general_bg_bottom_transparent_pressed.png */; };
 		5DF019C51B43ADBD009F8134 /* ic_general_bottom_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DF019B91B43ADBD009F8134 /* ic_general_bottom_add.png */; };
@@ -40,6 +41,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D38F4061B43C88600BB15AF /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		5DF019B71B43ADBD009F8134 /* ic_general_bg_bottom_transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_general_bg_bottom_transparent.png; sourceTree = "<group>"; };
 		5DF019B81B43ADBD009F8134 /* ic_general_bg_bottom_transparent_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_general_bg_bottom_transparent_pressed.png; sourceTree = "<group>"; };
 		5DF019B91B43ADBD009F8134 /* ic_general_bottom_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_general_bottom_add.png; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D38F4071B43C88600BB15AF /* AssetsLibrary.framework in Frameworks */,
 				EC4063D416ACF86200132CFC /* NewsstandKit.framework in Frameworks */,
 				ECFA66BC16ABE51500EA2211 /* MapKit.framework in Frameworks */,
 				ECFA66BA16ABE51100EA2211 /* CoreLocation.framework in Frameworks */,
@@ -138,6 +141,7 @@
 		EC67559D16ABAB7F008998E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5D38F4061B43C88600BB15AF /* AssetsLibrary.framework */,
 				EC4063D316ACF86200132CFC /* NewsstandKit.framework */,
 				ECFA66BB16ABE51500EA2211 /* MapKit.framework */,
 				ECFA66B916ABE51100EA2211 /* CoreLocation.framework */,
