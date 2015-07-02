@@ -12,7 +12,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "GMGridView.h"
 #import "MWPhotoBrowser.h"
-
+#import "TBAppDelegate.h"
+#import "TBConstants.h"
 
 #define INTERFACE_IS_PAD     ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
 #define INTERFACE_IS_PHONE   ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
@@ -56,10 +57,28 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
+    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+    
+    [defaultCenter addObserver:self selector:@selector(applicationBecomeActive) name:NOTIFICATION_APP_BECOME_ACTIVE object:nil];
+    [defaultCenter addObserver:self selector:@selector(userDidTakeScreenshot) name:UIApplicationUserDidTakeScreenshotNotification object:nil];
+    
     _gmGridView.mainSuperView = self.navigationController.view; //[UIApplication sharedApplication].keyWindow.rootViewController.view;
 }
 
-
+-(void)applicationBecomeActive
+{
+    [self scanAllScreenShotImages];
+}
+-(void)userDidTakeScreenshot
+{
+    double delayInSeconds = 0.5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+        [self scanAllScreenShotImages];
+    });
+    
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -100,6 +119,9 @@
     [_photoArray removeAllObjects];
     
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    NSDate* launchDate = [(TBAppDelegate *)[[UIApplication sharedApplication] delegate] lauchDate];
+    launchDate = [self localeDateFromGMT:launchDate];
+    NSLog(@"=====================================launchDate date: %@",launchDate.description);
     
     // Enumerate just the photos and videos group by using ALAssetsGroupSavedPhotos.
     [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
@@ -112,27 +134,35 @@
             
             // The end of the enumeration is signaled by asset == nil.
             if (alAsset) {
-                ALAssetRepresentation *representation = [alAsset defaultRepresentation];
-                //UIImage *latestPhoto = [UIImage imageWithCGImage:[representation fullScreenImage]];
+                NSDate * date = [alAsset valueForProperty:ALAssetPropertyDate];
+                NSDate* localeDate = [self localeDateFromGMT:date];
+                NSLog(@"asset date: %@",localeDate.description);
                 
-                
-                // Do something interesting with the AV asset.
-                //                NSLog(@"image metadata: %@",representation.metadata);
-                
-                int height = [[representation.metadata objectForKey:@"PixelHeight"] intValue];
-                int width = [[representation.metadata objectForKey:@"PixelWidth"] intValue];
-                if ( (height == 1136 && width == 640) ||
-                    (height == 960 && width == 640) ||
-                    (height == 480 && width == 320) ||
-                    (height == 1334 && width == 750) ||
-                    (height == 2208 && width == 1242)) {
-                    UIImage *photo = [UIImage imageWithCGImage:[representation fullScreenImage]];
-
-                    [_photoArray addObject:[MWPhoto photoWithImage:photo]];
-                    [_thumbnailArray addObject:[MWPhoto photoWithImage:[UIImage imageWithCGImage:alAsset.aspectRatioThumbnail]]];
+                if ([launchDate timeIntervalSince1970] < [localeDate timeIntervalSince1970]) {
 
                     
-                    [_gmGridView reloadData];
+                    ALAssetRepresentation *representation = [alAsset defaultRepresentation];
+                    //UIImage *latestPhoto = [UIImage imageWithCGImage:[representation fullScreenImage]];
+                    
+                    
+                    // Do something interesting with the AV asset.
+                    //                NSLog(@"image metadata: %@",representation.metadata);
+                    
+                    int height = [[representation.metadata objectForKey:@"PixelHeight"] intValue];
+                    int width = [[representation.metadata objectForKey:@"PixelWidth"] intValue];
+                    if ( (height == 1136 && width == 640) ||
+                        (height == 960 && width == 640) ||
+                        (height == 480 && width == 320) ||
+                        (height == 1334 && width == 750) ||
+                        (height == 2208 && width == 1242)) {
+                        
+                            UIImage *photo = [UIImage imageWithCGImage:[representation fullScreenImage]];
+                            
+                            [_photoArray addObject:[MWPhoto photoWithImage:photo]];
+                            [_thumbnailArray addObject:[MWPhoto photoWithImage:[UIImage imageWithCGImage:alAsset.aspectRatioThumbnail]]];
+                        
+                            [_gmGridView reloadData];
+                    }
                     
                     
                 }
@@ -143,6 +173,19 @@
         NSLog(@"No groups");
     }];
 }
+-(NSDate*)localeDateFromGMT:(NSDate*)sourceDate
+{
+    NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+    NSTimeZone* destinationTimeZone = [NSTimeZone systemTimeZone];
+    
+    NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:sourceDate];
+    NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:sourceDate];
+    NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
+    
+    NSDate* destinationDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:sourceDate] ;
+    return destinationDate;
+}
+
 //////////////////////////////////////////////////////////////
 #pragma mark controller events
 //////////////////////////////////////////////////////////////
@@ -176,7 +219,9 @@
 {
     [super viewDidUnload];
     _gmGridView = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];

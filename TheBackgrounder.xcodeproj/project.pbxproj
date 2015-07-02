@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D299BA11B44D39C00F64612 /* TBConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D299BA01B44D39C00F64612 /* TBConstants.m */; };
 		5D38F4071B43C88600BB15AF /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D38F4061B43C88600BB15AF /* AssetsLibrary.framework */; };
 		5D4E5E531B43EC5D00311D20 /* photo1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5D4E5E431B43EC5D00311D20 /* photo1.jpg */; };
 		5D4E5E541B43EC5D00311D20 /* photo1t.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5D4E5E441B43EC5D00311D20 /* photo1t.jpg */; };
@@ -112,6 +113,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5D299B9F1B44D39C00F64612 /* TBConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBConstants.h; sourceTree = "<group>"; };
+		5D299BA01B44D39C00F64612 /* TBConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBConstants.m; sourceTree = "<group>"; };
 		5D38F4061B43C88600BB15AF /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		5D4E5E2C1B43E26E00311D20 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = SOURCE_ROOT; };
 		5D4E5E431B43EC5D00311D20 /* photo1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo1.jpg; sourceTree = "<group>"; };
@@ -315,6 +318,8 @@
 				5DF019D31B43AECB009F8134 /* TBSecondViewController.m */,
 				5DF019D51B43AED6009F8134 /* TBThirdViewController.h */,
 				5DF019D61B43AED6009F8134 /* TBThirdViewController.m */,
+				5D299B9F1B44D39C00F64612 /* TBConstants.h */,
+				5D299BA01B44D39C00F64612 /* TBConstants.m */,
 			);
 			path = TheBackgrounder;
 			sourceTree = "<group>";
@@ -532,6 +537,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DF019D41B43AECB009F8134 /* TBSecondViewController.m in Sources */,
+				5D299BA11B44D39C00F64612 /* TBConstants.m in Sources */,
 				5D4E5E751B43FCB800311D20 /* TBFirstViewController.m in Sources */,
 				EC6755AB16ABAB7F008998E4 /* main.m in Sources */,
 				EC6755AF16ABAB7F008998E4 /* TBAppDelegate.m in Sources */,
